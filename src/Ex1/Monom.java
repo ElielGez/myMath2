@@ -112,11 +112,6 @@ public class Monom implements function {
 		return s;
 	}
 
-	public boolean equals(Monom m) {
-		if (this.isZero() && m.isZero())
-			return true;
-		return substractEqualsCheck(m);
-	}
 	// you may (always) add other methods.
 
 	// ****************** Private Methods and Data *****************
@@ -182,6 +177,17 @@ public class Monom implements function {
 	public function copy() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Monom) {
+			Monom m = (Monom) obj;
+			if (this.isZero() && m.isZero())
+				return true;
+			return substractEqualsCheck(m);
+		}
+		return false;
 	}
 
 }
