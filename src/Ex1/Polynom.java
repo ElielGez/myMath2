@@ -3,8 +3,6 @@ package Ex1;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-
-
 /**
  * This class represents a Polynom with add, multiply functionality, it also
  * should support the following: 1. Riemann's Integral:
@@ -122,8 +120,13 @@ public class Polynom implements Polynom_able {
 		this.monoms = p.monoms;
 	}
 
-	public boolean equals(Polynom_able p1) {
-		return substractEqualsCheck(p1);
+	public boolean equals(Object obj) {
+		Polynom_able p1;
+		if (obj instanceof Polynom_able) {
+			p1 = (Polynom_able) obj;
+			return substractEqualsCheck(p1);
+		}
+		return false;
 	}
 
 	@Override
