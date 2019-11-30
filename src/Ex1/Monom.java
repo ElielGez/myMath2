@@ -169,14 +169,12 @@ public class Monom implements function {
 
 	@Override
 	public function initFromString(String s) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Monom(s);
 	}
 
 	@Override
 	public function copy() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Monom(this);
 	}
 	
 	@Override
