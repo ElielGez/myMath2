@@ -166,7 +166,7 @@ public class Polynom implements Polynom_able {
 		Polynom p = new Polynom();
 		Iterator<Monom> it = this.iteretor();
 		while (it.hasNext()) {
-			p.monoms.add(new Monom(it.next().toString()));
+			p.monoms.add(new Monom(it.next()));
 		}
 		return p;
 	}
