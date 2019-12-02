@@ -23,6 +23,7 @@ public class Polynom implements Polynom_able {
 	}
 
 	/**
+	 * Constrctor that get string and split by - or + , and then call Monom add function
 	 * @param s: is a string represents a Polynom
 	 */
 	public Polynom(String s) {
@@ -34,6 +35,9 @@ public class Polynom implements Polynom_able {
 		}
 	}
 
+	/**
+	 * Calling f function of Monom by iterator function of the LinkedList<Monom>
+	 */
 	@Override
 	public double f(double x) {
 		double ans = 0;
@@ -45,6 +49,10 @@ public class Polynom implements Polynom_able {
 		return ans;
 	}
 
+	/**
+	 * Calling add function of Polynom by iterator function of the LinkedList<Monom>
+	 * @param p1 - Instance of object that implements Polynom_able
+	 */
 	@Override
 	public void add(Polynom_able p1) {
 		Iterator<Monom> it = p1.iteretor();
@@ -54,6 +62,9 @@ public class Polynom implements Polynom_able {
 		}
 	}
 
+	/**
+	 * Calling add function of Monom by iterator function of the LinkedList<Monom>
+	 */
 	@Override
 	public void add(Monom m1) {
 		Iterator<Monom> it = this.iteretor();
@@ -70,7 +81,10 @@ public class Polynom implements Polynom_able {
 			monoms.add(m1);
 		}
 	}
-
+	
+	/**
+	 * Calling substract function of Monom by iterator function of the LinkedList<Monom>
+	 */
 	@Override
 	public void substract(Monom m1) {
 		Iterator<Monom> it = this.iteretor();
@@ -88,7 +102,11 @@ public class Polynom implements Polynom_able {
 			monoms.add(m1);
 		}
 	}
-
+	
+	/**
+	 * Calling substract function of Polynom by iterator function of the LinkedList<Monom>
+	 * @param p1 - Instance of object that implements Polynom_able
+	 */
 	@Override
 	public void substract(Polynom_able p1) {
 		Iterator<Monom> it = p1.iteretor();
@@ -98,6 +116,9 @@ public class Polynom implements Polynom_able {
 		}
 	}
 
+	/**
+	 * Calling substract function of Monom by iterator function of the LinkedList<Monom>
+	 */
 	@Override
 	public void multiply(Monom m1) {
 		Iterator<Monom> it = this.iteretor();
@@ -107,6 +128,10 @@ public class Polynom implements Polynom_able {
 		}
 	}
 
+	/**
+	 * Calling substract function of Polynom by iterator function of the LinkedList<Monom>
+	 * @param p1 - Instance of object that implements Polynom_able
+	 */
 	@Override
 	public void multiply(Polynom_able p1) {
 		Polynom p = new Polynom();
@@ -120,10 +145,13 @@ public class Polynom implements Polynom_able {
 		this.monoms = p.monoms;
 	}
 
+	/**
+	 * equals function 
+	 * Override Object function in order to use JUNIT assert functions
+	 */
 	public boolean equals(Object obj) {
-		Polynom_able p1;
 		if (obj instanceof Polynom_able) {
-			p1 = (Polynom_able) obj;
+			Polynom_able p1 = (Polynom_able) obj;
 			return substractEqualsCheck(p1);
 		}
 		return false;
@@ -200,6 +228,10 @@ public class Polynom implements Polynom_able {
 		return area;
 	}
 
+	/**
+	 * This function return the iterator of the LinkedList<Monom>. 
+	 * Because LinkedList implements the interface List
+	 */
 	@Override
 	public Iterator<Monom> iteretor() {
 		Iterator<Monom> it = monoms.iterator();
@@ -217,8 +249,12 @@ public class Polynom implements Polynom_able {
 		return str;
 	}
 
+	/**
+	 * 
+	 * @param p
+	 * @return
+	 */
 	private boolean substractEqualsCheck(Polynom_able p) {
-
 		Polynom_able copy = this.copy();
 		copy.substract(p);
 		boolean flag = true;
@@ -238,6 +274,9 @@ public class Polynom implements Polynom_able {
 		this.monoms.sort(Monom.getComp());
 	}
 
+	/**
+	 * initial Polynom from string , just call the Polynom constructor and return instance of the object
+	 */
 	@Override
 	public function initFromString(String s) {
 		return new Polynom(s);

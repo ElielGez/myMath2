@@ -88,6 +88,11 @@ public class Monom implements function {
 		}
 	}
 
+	/**
+	 * This function check if Monoms are equals by substracting m1 from m2
+	 * @param m
+	 * @return
+	 */
 	private boolean substractEqualsCheck(Monom m) {
 		if (this._power == m._power) {
 			double result = this._coefficient - m._coefficient;
@@ -101,6 +106,9 @@ public class Monom implements function {
 		this.set_power(this._power + d._power);
 	}
 
+	/**
+	 * Override toString function and return string
+	 */
 	public String toString() {
 		String s = "";
 		if (this._power > 1)
@@ -127,6 +135,11 @@ public class Monom implements function {
 		this._power = p;
 	}
 
+	/**
+	 * This function handle start of Monom shape , and sign of the number
+	 * @param s string to manipulate
+	 * @return string after manipulation
+	 */
 	private String handleSignOfNumber(String s) {
 		if (s == null || s.equals("") || s.equals("+"))
 			return "1";
@@ -135,6 +148,11 @@ public class Monom implements function {
 		return s;
 	}
 
+	/**
+	 * This function get string and split it by Monom pattern, and set Monom params.
+	 * This function is called only after its pass the validateFormat function
+	 * @param s string to split
+	 */
 	private void splitMonomByString(String s) {
 		if (s.contains("x^")) {
 			String[] splittedStr = s.split("x\\^");
@@ -153,6 +171,13 @@ public class Monom implements function {
 		}
 	}
 
+	/**
+	 * This function get string and check if it's on the correct pattern , pattern of Monom 
+	 * Monom look like this: ax^b
+	 * I used regex.
+	 * @param s - string to validate
+	 * @return boolean
+	 */
 	private boolean validateFormat(String s) {
 		String patternStr = "(^[-+]?([0-9]*\\.[0-9]+|[0-9]+|)([x](\\^[0-9]+)?)?)";
 		Pattern pattern = Pattern.compile(patternStr);
@@ -167,16 +192,27 @@ public class Monom implements function {
 	private double _coefficient;
 	private int _power;
 
+	/**
+	 * initial Monom from string , just call the Monom constructor and return instance of the object
+	 */
 	@Override
 	public function initFromString(String s) {
 		return new Monom(s);
 	}
 
+	/**
+	 * copy function
+	 * calling the copy constructor of Monom class and return object that implements function interface. 
+	 */
 	@Override
 	public function copy() {
 		return new Monom(this);
 	}
 	
+	/**
+	 * equals function 
+	 * Override Object function in order to use JUNIT assert functions
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Monom) {
