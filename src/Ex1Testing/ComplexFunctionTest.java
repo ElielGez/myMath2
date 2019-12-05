@@ -2,14 +2,16 @@ package Ex1Testing;
 
 
 import Ex1.ComplexFunction;
+import Ex1.Polynom;
 import Ex1.function;
 
 public class ComplexFunctionTest {
 
 	public static void main(String[] args) {
-		String s = "div(plus(-1.0x^4+2.4x^2+3.1,+0.1x^5-1.2999999999999998x+5.0),-1.0x^4+2.4x^2+3.1)";
+		String s = "5x^2+3x";
 		function f = new ComplexFunction().initFromString(s);
-		System.out.println(f);
+		Polynom p = new Polynom("5x^2+3x");
+		System.out.println(f.equals(p));
 	}
 
 }
