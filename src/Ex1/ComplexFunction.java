@@ -1,5 +1,8 @@
 package Ex1;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ComplexFunction implements complex_function {
 
 	/**
@@ -10,8 +13,14 @@ public class ComplexFunction implements complex_function {
 	private function right;
 	private Operation op;
 
+	public ComplexFunction() {
+
+	}
+
 	/**
-	 * This function is constructor that get Operator as string and two function , f1 and f2
+	 * This function is constructor that get Operator as string and two function ,
+	 * f1 and f2
+	 * 
 	 * @param string
 	 * @param left
 	 * @param right
@@ -21,7 +30,7 @@ public class ComplexFunction implements complex_function {
 		this.right = right.copy();
 		this.op = getOperationByString(string);
 	}
-	
+
 	public ComplexFunction(ComplexFunction cf) {
 		this.op = cf.op;
 		this.left = cf.left.copy();
@@ -33,9 +42,9 @@ public class ComplexFunction implements complex_function {
 			this.left = f.copy();
 			this.right = null;
 			this.op = Operation.None;
-		}
-		else {
-			throw new ArithmeticException("For ComplexFunction object please use the constructor that get ComplexFunction as param");
+		} else {
+			throw new ArithmeticException(
+					"For ComplexFunction object please use the constructor that get ComplexFunction as param");
 		}
 	}
 
@@ -100,8 +109,104 @@ public class ComplexFunction implements complex_function {
 
 	@Override
 	public function initFromString(String s) {
+		function cf = initFromStrRecursive(new ComplexFunction(), s);
+		if (!(cf instanceof ComplexFunction)) {
+			cf = new ComplexFunction(cf);
+		}
+		return cf;
+	}
 
-		return null;
+	/**
+	 * This function is the core of initFromString
+	 * I used recursive way to handle the string , every time cut the operation , the left side of the function and the right side.
+	 * Then create new ComplexFunction object , and calling again to the recursive function.
+	 * My stop condition is when the currentString is not one the operations that is valid by the validateOperationString function
+	 * If from some reason , the user didn't enter a valid operation (See what valid in the function validateOperationString)
+	 * so the Polynom constructor will throw exception because it's not a valid polynom format.
+	 * @param cf
+	 * @param s
+	 * @return
+	 * @throws ArithmeticException
+	 */
+	private function initFromStrRecursive(ComplexFunction cf, String s) throws ArithmeticException{
+		if (!isBracketsEqual(s))
+			throw new ArithmeticException("The brackets of the string isn't equal , so the string is not valid");
+		
+		String nextString = s;
+		String currentString = "";
+		if (s.contains("(")) {
+			currentString = s.substring(0, s.indexOf("("));
+			nextString = s.substring(s.indexOf("(") + 1, s.length() - 1);
+		}
+		String arr[];
+		if (nextString.contains(")")) {
+			arr = splitStringWithBrackets(nextString);
+		} else {
+			arr = nextString.split(",");
+		}
+		if (validateOperationString(currentString)) {
+			// operation
+			cf = new ComplexFunction();
+			cf.op = getOperationByString(currentString);
+			cf.left = initFromStrRecursive(cf, arr[0]);
+			cf.right = initFromStrRecursive(cf, arr[1]);
+		} else {
+			// polynom
+			return new Polynom(arr[0]);
+
+		}
+		return cf;
+	}
+/**
+ * This function split the string by comma and brackets
+ * If I saw the char '(' and the char ')' the same time before I saw comma , I'm splitting the string by brackets ,
+ * otherwise I'm splitting by comma and then break the function.
+ * @param nextString - next string to handle on initFrom string
+ * @return arr of 2 string , on index 0 got the left function , on index 1 got the rigth function.
+ */
+	private String[] splitStringWithBrackets(String nextString) {
+		String[] arr = new String[2];
+		int brackets[] = { 0, 0 };
+		boolean sawComma = false;
+		for (int i = 0; i < nextString.length(); i++) {
+			char strAt =nextString.charAt(i); 
+			if (strAt== '(')
+				brackets[0]++;
+			else if (strAt == ')')
+				brackets[1]++;
+			else if(strAt == ',' && brackets[0] == 0 && brackets[1] == 0) sawComma = true;
+			if ((brackets[0] != 0 && brackets[1] != 0 && brackets[0] == brackets[1])) {
+				arr[0] = nextString.substring(0, i + 1);
+				arr[1] = nextString.substring(i + 2, nextString.length());
+				break;
+			}
+			else if(sawComma) {
+				arr[0] = nextString.substring(0, i);
+				arr[1] = nextString.substring(i + 1, nextString.length());
+				break;
+			}
+		}
+		return arr;
+	}
+
+	/**
+	 * This function check before initFromStrRecursive is starting , that the input string is valid.
+	 * That means that the amount of open brackets and closing brackets are equal. 
+	 * (Not in the order) - this why I'm surrounding the function with Execption 
+	 * @param s
+	 * @return
+	 */
+	private boolean isBracketsEqual(String s) {
+		int brackets[] = { 0, 0 };
+		// brackets[0] = count of '('
+		// brackets[1] = count of ')'
+		for (int i = 0; i < s.length(); i++) {
+			if (s.charAt(i) == '(')
+				brackets[0]++;
+			else if (s.charAt(i) == ')')
+				brackets[1]++;
+		}
+		return brackets[0] == brackets[1];
 	}
 
 	@Override
@@ -151,11 +256,16 @@ public class ComplexFunction implements complex_function {
 		this.op = Operation.Comp;
 	}
 
+	/**
+	 * Function to return operation from enums by string.
+	 * @param string
+	 * @return
+	 */
 	private Operation getOperationByString(String string) {
 		switch (string.toLowerCase()) {
 		case "plus":
 			return Operation.Plus;
-		case "times":
+		case "mul":
 			return Operation.Times;
 		case "div":
 			return Operation.Divid;
@@ -172,6 +282,18 @@ public class ComplexFunction implements complex_function {
 		default:
 			throw new ArithmeticException("Operation doesn't exist");
 		}
+	}
+
+	/**
+	 * Function to check if string is exactly one of the operations strings (plus,div,mul,min,max,comp)
+	 * @param s
+	 * @return
+	 */
+	private boolean validateOperationString(String s) {
+		String patternStr = "^(plus|div|mul|min|max|comp)$";
+		Pattern pattern = Pattern.compile(patternStr);
+		Matcher matcher = pattern.matcher(s);
+		return matcher.matches();
 	}
 
 }
