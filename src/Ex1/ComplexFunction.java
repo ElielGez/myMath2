@@ -95,6 +95,11 @@ public class ComplexFunction implements complex_function {
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		return getStringByOperation(this.op) + "(" + this.left + "," + this.right + ")";
+	}
 
 	@Override
 	public double f(double x) {
@@ -201,6 +206,34 @@ public class ComplexFunction implements complex_function {
 			return Operation.None;
 		case "error":
 			return Operation.Error;
+		default:
+			throw new ArithmeticException("Operation doesn't exist");
+		}
+	}	
+	/**
+	 * Function to return string by operation enum.
+	 * 
+	 * @param Operation
+	 * @return
+	 */
+	private String getStringByOperation(Operation op) {
+		switch (op) {
+		case Plus:
+			return "plus";
+		case Times:
+			return "mul";
+		case Divid:
+			return "div";
+		case Max:
+			return "max";
+		case Min:
+			return "min";
+		case Comp:
+			return "comp";
+		case None:
+			return "none";
+		case Error:
+			return "error";
 		default:
 			throw new ArithmeticException("Operation doesn't exist");
 		}

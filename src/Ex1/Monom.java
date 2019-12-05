@@ -112,11 +112,11 @@ public class Monom implements function {
 	public String toString() {
 		String s = "";
 		if (this._power > 1)
-			s = String.format("%.2f", this._coefficient) + "x^" + this._power;
+			s = this._coefficient + "x^" + this._power;
 		else if (this._power == 1)
-			s = String.format("%.2f", this._coefficient) + "x";
+			s = this._coefficient + "x";
 		else if (this._power == 0)
-			s = "" + String.format("%.2f", this._coefficient);
+			s = "" + this._coefficient;
 		return s;
 	}
 
