@@ -116,6 +116,85 @@ public class ComplexFunction implements complex_function {
 		return cf;
 	}
 
+	@Override
+	public function copy() {
+		return new ComplexFunction(this);
+	}
+
+	@Override
+	public void plus(function f1) {
+		this.left = this.copy();
+		this.right = f1;
+		this.op = Operation.Plus;
+	}
+
+	@Override
+	public void mul(function f1) {
+		this.left = this.copy();
+		this.right = f1;
+		this.op = Operation.Times;
+	}
+
+	@Override
+	public void div(function f1) {
+		this.left = this.copy();
+		this.right = f1;
+		this.op = Operation.Divid;
+	}
+
+	@Override
+	public void max(function f1) {
+		this.left = this.copy();
+		this.right = f1;
+		this.op = Operation.Max;
+	}
+
+	@Override
+	public void min(function f1) {
+		this.left = this.copy();
+		this.right = f1;
+		this.op = Operation.Min;
+	}
+
+	@Override
+	public void comp(function f1) {
+		this.left = this.copy();
+		this.right = f1;
+		this.op = Operation.Comp;
+	}
+	
+	
+	
+	// ********** utils function for this class only ***********
+
+	/**
+	 * Function to return operation from enums by string.
+	 * @param string
+	 * @return
+	 */
+	private Operation getOperationByString(String string) {
+		switch (string.toLowerCase()) {
+		case "plus":
+			return Operation.Plus;
+		case "mul":
+			return Operation.Times;
+		case "div":
+			return Operation.Divid;
+		case "max":
+			return Operation.Max;
+		case "min":
+			return Operation.Min;
+		case "comp":
+			return Operation.Comp;
+		case "none":
+			return Operation.None;
+		case "error":
+			return Operation.Error;
+		default:
+			throw new ArithmeticException("Operation doesn't exist");
+		}
+	}
+	
 	/**
 	 * This function is the core of initFromString
 	 * I used recursive way to handle the string , every time cut the operation , the left side of the function and the right side.
@@ -207,81 +286,6 @@ public class ComplexFunction implements complex_function {
 				brackets[1]++;
 		}
 		return brackets[0] == brackets[1];
-	}
-
-	@Override
-	public function copy() {
-		return new ComplexFunction(this);
-	}
-
-	@Override
-	public void plus(function f1) {
-		this.left = this.copy();
-		this.right = f1;
-		this.op = Operation.Plus;
-	}
-
-	@Override
-	public void mul(function f1) {
-		this.left = this.copy();
-		this.right = f1;
-		this.op = Operation.Times;
-	}
-
-	@Override
-	public void div(function f1) {
-		this.left = this.copy();
-		this.right = f1;
-		this.op = Operation.Divid;
-	}
-
-	@Override
-	public void max(function f1) {
-		this.left = this.copy();
-		this.right = f1;
-		this.op = Operation.Max;
-	}
-
-	@Override
-	public void min(function f1) {
-		this.left = this.copy();
-		this.right = f1;
-		this.op = Operation.Min;
-	}
-
-	@Override
-	public void comp(function f1) {
-		this.left = this.copy();
-		this.right = f1;
-		this.op = Operation.Comp;
-	}
-
-	/**
-	 * Function to return operation from enums by string.
-	 * @param string
-	 * @return
-	 */
-	private Operation getOperationByString(String string) {
-		switch (string.toLowerCase()) {
-		case "plus":
-			return Operation.Plus;
-		case "mul":
-			return Operation.Times;
-		case "div":
-			return Operation.Divid;
-		case "max":
-			return Operation.Max;
-		case "min":
-			return Operation.Min;
-		case "comp":
-			return Operation.Comp;
-		case "none":
-			return Operation.None;
-		case "error":
-			return Operation.Error;
-		default:
-			throw new ArithmeticException("Operation doesn't exist");
-		}
 	}
 
 	/**
