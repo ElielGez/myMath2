@@ -27,24 +27,23 @@ public class ComplexFunction implements complex_function {
 	 */
 	public ComplexFunction(String string, function left, function right) {
 		this.left = left.copy();
-		this.right = right.copy();
+		if (right != null)
+			this.right = right.copy();
 		this.op = getOperationByString(string);
 	}
 
-	public ComplexFunction(ComplexFunction cf) {
-		this.op = cf.op;
-		this.left = cf.left.copy();
-		this.right = cf.right.copy();
-	}
-
+	// copy constructor for any kind of function
 	public ComplexFunction(function f) {
 		if (!(f instanceof ComplexFunction)) {
 			this.left = f.copy();
 			this.right = null;
 			this.op = Operation.None;
 		} else {
-			throw new ArithmeticException(
-					"For ComplexFunction object please use the constructor that get ComplexFunction as param");
+			ComplexFunction cf = (ComplexFunction)f;
+			this.op = cf.op;
+			this.left = cf.left.copy();
+			if (cf.right != null)
+				this.right = cf.right.copy();
 		}
 	}
 
@@ -86,16 +85,17 @@ public class ComplexFunction implements complex_function {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof function) {
-			function f = (function)obj;
-			for (double i = 0; i < 1000000; i=i+7) {			
-				if(Math.abs(f.f(i) - this.f(i)) > Monom.EPSILON) return false;
+		if (obj instanceof function) {
+			function f = (function) obj;
+			for (double i = 0; i < 1000000; i = i + 7) {
+				if (Math.abs(f.f(i) - this.f(i)) > Monom.EPSILON)
+					return false;
 			}
 			return true;
 		}
 		return false;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getStringByOperation(this.op) + "(" + this.left + "," + this.right + ")";
@@ -209,7 +209,8 @@ public class ComplexFunction implements complex_function {
 		default:
 			throw new ArithmeticException("Operation doesn't exist");
 		}
-	}	
+	}
+
 	/**
 	 * Function to return string by operation enum.
 	 * 
