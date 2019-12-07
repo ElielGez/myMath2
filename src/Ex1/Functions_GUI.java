@@ -164,7 +164,7 @@ public class Functions_GUI implements functions {
 	public void drawFunctions(String json_file) {
 		JSONDrawingConfig config = deserialJSONConfig(json_file);
 		if (!config.validateObject())
-			throw new ArithmeticException("Some data in JSONDrawingConfig object is missing");
+			throw new ArithmeticException("Some data in JSONDrawingConfig object is missing, check your JSON file please.");
 		
 		Range rx = new Range(config.getRange_X()[0],config.getRange_X()[1]);
 		Range ry = new Range(config.getRange_Y()[0],config.getRange_Y()[1]);
@@ -194,13 +194,13 @@ public class Functions_GUI implements functions {
 		StdDraw.line(minX, 0, maxX, 0);
 		StdDraw.setFont(new Font("TimesRoman", Font.BOLD, 15));
 		for (double i = minX; i <= maxX; i = i + 1) {
-			StdDraw.text(i - 0.07, -0.3, Double.toString(i));
+			StdDraw.text(i - 0.07, -0.3, Integer.toString((int)i));
 		}
 //		//////// y axis
 		StdDraw.line(0, minY, 0, maxY);
 		for (double i = minY; i <= maxY; i = i + 1) {
 			if (i != 0)
-				StdDraw.text(-0.3, i - 0.07, Double.toString(i));
+				StdDraw.text(-0.3, i - 0.07, Integer.toString((int)i));
 		}
 	}
 
