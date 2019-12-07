@@ -2,13 +2,17 @@ package Ex1;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
 
-import org.junit.jupiter.params.aggregator.ArgumentAccessException;
+import com.google.gson.Gson;
 
 public class Functions_GUI implements functions {
 
@@ -90,15 +94,52 @@ public class Functions_GUI implements functions {
 		return functions.get(i);
 	}
 
+	public String toString() {
+		return functions.toString();
+	}
+
+	public String prepareStringToFile() {
+		StringBuilder sb = new StringBuilder();
+		Iterator<function> it = this.iterator();
+		while (it.hasNext()) {
+			function f = it.next();
+			sb.append(f);
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+
 	@Override
 	public void initFromFile(String file) throws IOException {
-		// TODO Auto-generated method stub
+		String line = "";
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file));
+
+			while ((line = br.readLine()) != null) {
+				String[] functions = line.split("\n");
+				for (int i = 0; i < functions.length; i++) {
+					this.functions.add(new ComplexFunction().initFromString(functions[i]));
+				}
+			}
+			br.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("could not read file");
+		}
 
 	}
 
 	@Override
 	public void saveToFile(String file) throws IOException {
-		// TODO Auto-generated method stub
+		try {
+			PrintWriter pw = new PrintWriter(new File(file));
+			pw.write(prepareStringToFile());
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("could not write file");
+		}
 
 	}
 
@@ -110,7 +151,6 @@ public class Functions_GUI implements functions {
 		double steps = (Math.abs((minX - maxX)) / resolution);
 		Iterator<function> it = this.iterator();
 		while (it.hasNext()) {
-			System.out.println(new Random().nextInt(Colors.length));
 			StdDraw.setPenColor(Colors[new Random().nextInt(Colors.length)]);
 			function f = it.next();
 			// draw the functions by values
@@ -122,8 +162,13 @@ public class Functions_GUI implements functions {
 
 	@Override
 	public void drawFunctions(String json_file) {
-		// TODO Auto-generated method stub
-
+		JSONDrawingConfig config = deserialJSONConfig(json_file);
+		if (!config.validateObject())
+			throw new ArithmeticException("Some data in JSONDrawingConfig object is missing");
+		
+		Range rx = new Range(config.getRange_X()[0],config.getRange_X()[1]);
+		Range ry = new Range(config.getRange_Y()[0],config.getRange_Y()[1]);
+		this.drawFunctions(config.getWidth(), config.getHeight(), rx, ry, config.getResolution());
 	}
 
 	private void prepareDrawingCanvas(int width, int height, Range rx, Range ry) {
@@ -157,6 +202,19 @@ public class Functions_GUI implements functions {
 			if (i != 0)
 				StdDraw.text(-0.3, i - 0.07, Double.toString(i));
 		}
+	}
+
+	private JSONDrawingConfig deserialJSONConfig(String file) {
+		Gson gson = new Gson();
+		JSONDrawingConfig config = new JSONDrawingConfig();
+		try {
+			FileReader reader = new FileReader(file);
+			config = gson.fromJson(reader, JSONDrawingConfig.class);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return config;
 	}
 
 }

@@ -98,7 +98,9 @@ public class ComplexFunction implements complex_function {
 
 	@Override
 	public String toString() {
-		return getStringByOperation(this.op) + "(" + this.left + "," + this.right + ")";
+		if(this.op != Operation.None)
+			return getStringByOperation(this.op) + "(" + this.left + "," + this.right + ")";
+		else return this.left.toString();
 	}
 
 	@Override

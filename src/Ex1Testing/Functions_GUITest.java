@@ -1,5 +1,7 @@
 package Ex1Testing;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,11 +26,14 @@ import Ex1.function;
  */
 class Functions_GUITest {
 	public static void main(String[] a) {
-		Functions_GUI data = FunctionsFactory();
-		int w=1000, h=600, res=200;
-		Range rx = new Range(-10,10);
-		Range ry = new Range(-5,15);
-		data.drawFunctions(w,h,rx,ry,res);
+//		Functions_GUI data = FunctionsFactory();
+//		int w=1000, h=600, res=200;
+//		Range rx = new Range(-10,10);
+//		Range ry = new Range(-5,15);
+//		data.drawFunctions(w,h,rx,ry,res);
+//		testSaveToFile();
+//		testInitFromFile();
+		testDrawFunctionsByJson();
 	}
 	private Functions_GUI _data=null;
 //	@BeforeAll
@@ -46,19 +51,48 @@ class Functions_GUITest {
 	}
 
 	//@Test
-	void testInitFromFile() {
-	//	fail("Not yet implemented");
+	static void testInitFromFile() {
+		Functions_GUI fg = new Functions_GUI();
+		try {
+			fg.initFromFile("test_files/functions1.txt");
+			int w=1000, h=600, res=200;
+			Range rx = new Range(-10,10);
+			Range ry = new Range(-5,15);
+			fg.drawFunctions(w,h,rx,ry,res);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	//@Test
-	void testSaveToFile() {
-	//	fail("Not yet implemented");
+	static void testSaveToFile() {
+		Functions_GUI fg = new Functions_GUI();
+		try {
+			fg.initFromFile("test_files/functions1.txt");
+			fg.saveToFile("test_files/functions2.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	//@Test
 	void testDrawFunctions() {
 		//_data.drawFunctions();
 	//	fail("Not yet implemented");
+	}
+	
+	//@Test
+	static void testDrawFunctionsByJson() {
+		Functions_GUI fg = new Functions_GUI();
+		try {
+			fg.initFromFile("test_files/functions1.txt");
+			fg.drawFunctions("test_files/GUI_params.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test
