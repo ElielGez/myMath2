@@ -21,18 +21,22 @@ public class ComplexFunction implements complex_function {
 	 * This function is constructor that get Operator as string and two function ,
 	 * f1 and f2
 	 * 
-	 * @param string
-	 * @param left
-	 * @param right
+	 * @param string - operation in string
+	 * @param left - f1
+	 * @param right - f2
 	 */
 	public ComplexFunction(String string, function left, function right) {
 		this.left = left.copy();
-		if (right != null)
+		if (right != null) // right can be null (In none operation for example)
 			this.right = right.copy();
 		this.op = getOperationByString(string);
 	}
 
-	// copy constructor for any kind of function
+	/**
+	 * ComplexFunction copy constructor
+	 * Even instance of class that implement function interface , can be copied here into new complex function with none operation.
+	 * @param f
+	 */
 	public ComplexFunction(function f) {
 		if (!(f instanceof ComplexFunction)) {
 			this.left = f.copy();
@@ -82,12 +86,15 @@ public class ComplexFunction implements complex_function {
 	public void setOp(Operation op) {
 		this.op = op;
 	}
-
+	
+	/**
+	 * This equals function isn't fully working for any x, so I created a temp solution as asked from Boaz.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof function) {
 			function f = (function) obj;
-			for (double i = 0; i < 1000000; i = i + 7) {
+			for (double i = 0; i < 1000000; i = i + 0.7) {
 				if (Math.abs(f.f(i) - this.f(i)) > Monom.EPSILON)
 					return false;
 			}
@@ -96,6 +103,10 @@ public class ComplexFunction implements complex_function {
 		return false;
 	}
 
+	/**
+	 * Function toString for ComplexFunction
+	 * if operation is none im returning only the left side , because the right side is null.
+	 */
 	@Override
 	public String toString() {
 		if(this.op != Operation.None)
@@ -103,6 +114,9 @@ public class ComplexFunction implements complex_function {
 		else return this.left.toString();
 	}
 
+	/**
+	 * f Function , returning by Operation the value of the function in x value  == f(x)
+	 */
 	@Override
 	public double f(double x) {
 		switch (this.op) {
@@ -126,6 +140,9 @@ public class ComplexFunction implements complex_function {
 		return 0;
 	}
 
+	/**
+	 * initFromString function , using the initFromStrRecursive function to create ComplexFunction from string
+	 */
 	@Override
 	public function initFromString(String s) {
 		function cf = initFromStrRecursive(new ComplexFunction(), s);
@@ -135,11 +152,19 @@ public class ComplexFunction implements complex_function {
 		return cf;
 	}
 
+	/**
+	 * copy function , call the copy constructor
+	 */
 	@Override
 	public function copy() {
 		return new ComplexFunction(this);
 	}
 
+	/**
+	 * All of the below functions untill comp function is the same , moving and copy current object to left function.
+	 * And putting f1 in the right side , and set the Operation by function.
+	 * I'm copying the current object because after that I'm override this.right and this.op
+	 */
 	@Override
 	public void plus(function f1) {
 		this.left = this.copy();
@@ -280,7 +305,9 @@ public class ComplexFunction implements complex_function {
 			cf.left = initFromStrRecursive(cf, arr[0]);
 			cf.right = initFromStrRecursive(cf, arr[1]);
 		} else {
-			// polynom
+			// polynom or some operation that isn't valid...
+			// if it's operation that isn't valid , will throw error in Monom class.
+			// maybe can check here with regex if it's valid Polynom or not..
 			return new Polynom(arr[0]);
 
 		}
