@@ -2,7 +2,6 @@ package Ex1Testing;
 
 import java.io.IOException;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Ex1.ComplexFunction;
@@ -25,48 +24,33 @@ import Ex1.function;
  *
  */
 class Functions_GUITest {
-	public static void main(String[] a) {
-		Functions_GUI data = FunctionsFactory();
-		int w=1000, h=600, res=200;
-		Range rx = new Range(-10,10);
-		Range ry = new Range(-5,15);
-		data.drawFunctions(w,h,rx,ry,res);
-//		testSaveToFile();
-//		testInitFromFile();
-//		testDrawFunctionsByJson();
-	}
-	private Functions_GUI _data=null;
-//	@BeforeAll
-//	static void setUpBeforeClass() throws Exception {
-//	}
 
-	@BeforeEach
-	void setUp() throws Exception {
-		_data = FunctionsFactory();
-	}
 
-	//@Test
+	@Test
 	void testFunctions_GUI() {
-	//	fail("Not yet implemented");
+		function f1  =new ComplexFunction().initFromString("mul(5x^4,5x)");
+		function f2 = new ComplexFunction().initFromString("plus(5x,6x)");
+		
+		Functions_GUI fg = new Functions_GUI();
+		fg.add(f1);
+		fg.add(f2);
+		boolean result = fg.contains(f1);
+		System.out.println(result);
 	}
 
-	//@Test
-	static void testInitFromFile() {
+	@Test
+	void testInitFromFile() {
 		Functions_GUI fg = new Functions_GUI();
 		try {
 			fg.initFromFile("test_files/functions1.txt");
-			int w=1000, h=600, res=200;
-			Range rx = new Range(-10,10);
-			Range ry = new Range(-5,15);
-			fg.drawFunctions(w,h,rx,ry,res);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	//@Test
-	static void testSaveToFile() {
+	@Test
+	void testSaveToFile() {
 		Functions_GUI fg = new Functions_GUI();
 		try {
 			fg.initFromFile("test_files/functions1.txt");
@@ -77,14 +61,17 @@ class Functions_GUITest {
 		}
 	}
 
-	//@Test
+	@Test
 	void testDrawFunctions() {
-		//_data.drawFunctions();
-	//	fail("Not yet implemented");
+		Functions_GUI data = FunctionsFactory();
+		int w=1000, h=600, res=200;
+		Range rx = new Range(-10,10);
+		Range ry = new Range(-5,15);
+		data.drawFunctions(w,h,rx,ry,res);
 	}
 	
-	//@Test
-	static void testDrawFunctionsByJson() {
+	@Test
+	void testDrawFunctionsByJson() {
 		Functions_GUI fg = new Functions_GUI();
 		try {
 			fg.initFromFile("test_files/functions1.txt");
