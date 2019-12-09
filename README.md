@@ -58,3 +58,5 @@ Range rx = new Range(-10,10);
 Range ry = new Range(-5,15);
 fg.drawFunctions(w,h,rx,ry,res);
 ```
+
+### **NOTE: more details about classes and interfaces of the project can be found on Wiki**
