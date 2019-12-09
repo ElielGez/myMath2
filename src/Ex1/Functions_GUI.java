@@ -16,15 +16,23 @@ import com.google.gson.Gson;
 
 public class Functions_GUI implements functions {
 
+	// colors for functions_gui
 	public static Color[] Colors = { Color.blue, Color.cyan, Color.MAGENTA, Color.ORANGE, Color.red, Color.GREEN,
 			Color.PINK };
 
 	ArrayList<function> functions;
 
+	/**
+	 * empty counstructor to initialize the ArrayList 
+	 */
 	public Functions_GUI() {
 		functions = new ArrayList<function>();
 	}
 
+	/**
+	 * All of the below functions are implement of Collection interface , 
+	 * because functions interface implement Collection (until get function)
+	 */
 	@Override
 	public int size() {
 		return functions.size();
@@ -98,6 +106,12 @@ public class Functions_GUI implements functions {
 		return functions.toString();
 	}
 
+	/**
+	 * This function is preparing the the functions string for export to file.
+	 * My char to seperate between functions in the string is '\n' (on read too)
+	 * Used StringBuilder because it's more effective
+	 * @return
+	 */
 	public String prepareStringToFile() {
 		StringBuilder sb = new StringBuilder();
 		Iterator<function> it = this.iterator();
@@ -109,6 +123,9 @@ public class Functions_GUI implements functions {
 		return sb.toString();
 	}
 
+	/**
+	 * This function initialize the functions collection and create ComplexFunction for every line.
+	 */
 	@Override
 	public void initFromFile(String file) throws IOException {
 		String line = "";
@@ -130,6 +147,10 @@ public class Functions_GUI implements functions {
 
 	}
 
+	/**
+	 * This function get path of file and save into the file the strings of the functions in the collection,
+	 * seperate by '\n'
+	 */
 	@Override
 	public void saveToFile(String file) throws IOException {
 		try {
@@ -143,6 +164,9 @@ public class Functions_GUI implements functions {
 
 	}
 
+	/**
+	 * Draw the function of the object with the config params
+	 */
 	@Override
 	public void drawFunctions(int width, int height, Range rx, Range ry, int resolution) {
 		prepareDrawingCanvas(width, height, rx, ry);
@@ -160,6 +184,10 @@ public class Functions_GUI implements functions {
 		}
 	}
 
+	/**
+	 * Draw function by Json_file
+	 * Get config of drawing from the json file
+	 */
 	@Override
 	public void drawFunctions(String json_file) {
 		JSONDrawingConfig config = deserialJSONConfig(json_file);
@@ -171,6 +199,13 @@ public class Functions_GUI implements functions {
 		this.drawFunctions(config.getWidth(), config.getHeight(), rx, ry, config.getResolution());
 	}
 
+	/**
+	 * Function to prepare the canvas of the graph
+	 * @param width
+	 * @param height
+	 * @param rx
+	 * @param ry
+	 */
 	private void prepareDrawingCanvas(int width, int height, Range rx, Range ry) {
 		StdDraw.setCanvasSize(width, height);
 		double maxY = ry.get_max(), minY = ry.get_min();
@@ -204,6 +239,13 @@ public class Functions_GUI implements functions {
 		}
 	}
 
+	/**
+	 * Deserialization of the json file
+	 * Create new Object of JSONDrawingConfig from the json file 
+	 * Using GSON library
+	 * @param file
+	 * @return
+	 */
 	private JSONDrawingConfig deserialJSONConfig(String file) {
 		Gson gson = new Gson();
 		JSONDrawingConfig config = new JSONDrawingConfig();
