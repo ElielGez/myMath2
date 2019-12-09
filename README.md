@@ -24,3 +24,23 @@ but after clone this project , you need to add the external jar of gson from the
 
 * **The equals function of ComplexFunction isn't fully working, because there is infinity options to build complex function with polynom and monom.
 	My partition solution is to run between -1000 and 1000 in loop(steps of i+0.7) and check if for any x on this range the f functions are equal.**
+	
+## Examples:
+
+#### Monom Class:
+```
+	Monom m = new Monom("5x^3");
+	double fx = m.f(1); //f(1) = 5 
+```
+
+#### Polynom Class:
+```
+	Polynom p = new Polynom("-x+6-x^2");
+	double fx = p.f(3); //f(3) = -6
+```
+
+#### ComplexFunction Class:
+```
+	String s = "mul(plus(-1.0x^4+2.4x^2+3.1,+0.1x^5-1.2999999999999998x+5.0),-1.0x^4+2.4x^2+3.1)";
+	function f = new ComplexFunction().initFromString(s);
+```
