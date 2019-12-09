@@ -1,5 +1,7 @@
 package Ex1Testing;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
@@ -25,42 +27,6 @@ import Ex1.function;
  */
 class Functions_GUITest {
 
-
-	@Test
-	void testFunctions_GUI() {
-		function f1  =new ComplexFunction().initFromString("mul(5x^4,5x)");
-		function f2 = new ComplexFunction().initFromString("plus(5x,6x)");
-		
-		Functions_GUI fg = new Functions_GUI();
-		fg.add(f1);
-		fg.add(f2);
-		boolean result = fg.contains(f1);
-		System.out.println(result);
-	}
-
-	@Test
-	void testInitFromFile() {
-		Functions_GUI fg = new Functions_GUI();
-		try {
-			fg.initFromFile("test_files/functions1.txt");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Test
-	void testSaveToFile() {
-		Functions_GUI fg = new Functions_GUI();
-		try {
-			fg.initFromFile("test_files/functions1.txt");
-			fg.saveToFile("test_files/functions2.txt");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	@Test
 	void testDrawFunctions() {
 		Functions_GUI data = FunctionsFactory();
@@ -81,13 +47,41 @@ class Functions_GUITest {
 			e.printStackTrace();
 		}
 	}
+	
 
 	@Test
-	void testDrawFunctionsIntIntRangeRangeInt() {
-//		_data.drawFunctions();
-		//fail("Not yet implemented");
+	void testSaveToFile() {
+		Functions_GUI fg = new Functions_GUI();
+		Functions_GUI fg2 = new Functions_GUI();
+		try {
+			String s = "plus(div(5x^2+3,9),plus(20x,12x^5))";
+			fg.add(new ComplexFunction().initFromString(s));
+			fg.saveToFile("test_files/functions3.txt");
+			fg2.initFromFile("test_files/functions3.txt");
+			assertTrue(fg2.contains(new ComplexFunction().initFromString(s)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	public static Functions_GUI FunctionsFactory() {
+	
+	@Test
+	void testInitFromFile() {
+		Functions_GUI fg = new Functions_GUI();
+		Functions_GUI fg2 = new Functions_GUI();
+		try {
+			fg.initFromFile("test_files/functions1.txt");
+			fg.saveToFile("test_files/functions2.txt");
+			fg2.initFromFile("test_files/functions2.txt");
+			assertTrue(fg.containsAll(fg2));
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private static Functions_GUI FunctionsFactory() {
 		Functions_GUI ans = new Functions_GUI();
 		String s1 = "3.1+2.4x^2-x^4";
 		String s2 = "5+2x-3.3x+0.1x^5";
