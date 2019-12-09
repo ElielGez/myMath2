@@ -145,11 +145,24 @@ public class ComplexFunction implements complex_function {
 	 */
 	@Override
 	public function initFromString(String s) {
+		// this if checks that if I got in the string the char ',' it must come with operation. otherwise it's normal polynom
+		if(!checkStringStartsOperation(s) && s.contains(",")) 
+			throw new ArithmeticException("String must start with valid operation (invalid is error or none)");
+		
 		function cf = initFromStrRecursive(new ComplexFunction(), s);
 		if (!(cf instanceof ComplexFunction)) {
 			cf = new ComplexFunction(cf);
 		}
 		return cf;
+	}
+	
+	/**
+	 * function to check if string starts with operation.
+	 * @param s
+	 * @return
+	 */
+	private boolean checkStringStartsOperation(String s) {
+		return s.startsWith("plus") || s.startsWith("div") || s.startsWith("mul") || s.startsWith("min") || s.startsWith("max") || s.startsWith("comp");
 	}
 
 	/**
