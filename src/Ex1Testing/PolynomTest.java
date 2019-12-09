@@ -80,37 +80,4 @@ class PolynomTest {
 		p2 = new Polynom(polynoms2[1]);
 		assertEquals(p,p2);
 	}
-
-
-//	public static void testRoot() {
-//		System.out.println("*****  testRoot:  *****");
-//		Polynom p;
-//		String[] polynoms = { "-x+6-x^2", "-1.5x^2" };
-//		for (int i = 0; i < polynoms.length; i++) {
-//			try {
-//				double a = -2;
-//				double b = 5;
-//				p = new Polynom(polynoms[i]);
-//				double root = p.root(a, b, Monom.EPSILON);
-//				System.out.println("Root[" + a + "," + b + "] of polynom: " + p + " is: " + root);
-//			} catch (ArithmeticException e) {
-//				System.out.println(polynoms[i] + " " + e);
-//			}
-//		}
-//		System.out.println("");
-//	}
-//
-//	public static void testArea() {
-//		System.out.println("*****  testArea:  ***** Might take a while because the eps is Monom.EPSILON");
-//		Polynom p;
-//		String[] polynoms = { "2", "-x+6-x^2", "-3.2x^2+4-3x^2", "4x^20+8x+1+2", "-1.5x^2" };
-//		for (int i = 0; i < polynoms.length; i++) {
-//			double a = -2;
-//			double b = 3;
-//			p = new Polynom(polynoms[i]);
-//			double area = p.area(a, b, Monom.EPSILON);
-//			System.out.println("Area[" + a + "," + b + "] of polynom: " + p + " is: " + area);
-//		}
-//		System.out.println("");
-//	}
 }
