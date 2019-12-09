@@ -69,7 +69,7 @@ public class Monom implements function {
 	public Monom(String s) {
 		// need to check if comes invalid string (by regex)
 
-		if (!validateFormat(s)) {
+		if (!validateFormat(s) || s.isEmpty()) {
 			throw new ArithmeticException(
 					"Invalid format for Monom . Could created by instance of Monom Class or Polynom Class");
 		}
