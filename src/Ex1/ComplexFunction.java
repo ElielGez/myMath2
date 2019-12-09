@@ -94,7 +94,7 @@ public class ComplexFunction implements complex_function {
 	public boolean equals(Object obj) {
 		if (obj instanceof function) {
 			function f = (function) obj;
-			for (double i = 0; i < 1000000; i = i + 0.7) {
+			for (double i = -1000; i < 1000; i = i + 0.7) {
 				if (Math.abs(f.f(i) - this.f(i)) > Monom.EPSILON)
 					return false;
 			}
