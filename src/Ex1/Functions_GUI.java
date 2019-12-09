@@ -175,8 +175,13 @@ public class Functions_GUI implements functions {
 		double steps = (Math.abs((minX - maxX)) / resolution);
 		Iterator<function> it = this.iterator();
 		while (it.hasNext()) {
-			StdDraw.setPenColor(Colors[new Random().nextInt(Colors.length)]);
+			Color c = Colors[new Random().nextInt(Colors.length)];
+			StdDraw.setPenColor(c);
 			function f = it.next();
+			
+			//print color and function string(like boaz show in his example)
+			System.out.println(c + "   f(x)=" + f);
+			
 			// draw the functions by values
 			for (double i = minX; i < maxX; i = i + steps) {
 				StdDraw.line(i, f.f(i), i + steps, f.f(i + steps));
