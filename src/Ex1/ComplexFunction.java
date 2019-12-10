@@ -334,7 +334,7 @@ public class ComplexFunction implements complex_function {
 	 * 
 	 * @param nextString - next string to handle on initFrom string
 	 * @return arr of 2 string , on index 0 got the left function , on index 1 got
-	 *         the rigth function.
+	 *         the right function.
 	 */
 	private String[] splitStringWithBrackets(String nextString) {
 		String[] arr = new String[2];

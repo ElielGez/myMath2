@@ -15,28 +15,50 @@ import java.util.regex.Pattern;
  *
  */
 public class Monom implements function {
+	
 	public static final Monom ZERO = new Monom(0, 0);
 	public static final Monom MINUS1 = new Monom(-1, 0);
 	public static final double EPSILON = 0.0000001;
 	public static final Comparator<Monom> _Comp = new Monom_Comperator();
 
+	/**
+	 * Function to return Comparator object with compare function
+	 * @return
+	 */
 	public static Comparator<Monom> getComp() {
 		return _Comp;
 	}
 
+	/**
+	 * Constructor to initialize coefficient and power
+	 * @param a
+	 * @param b
+	 */
 	public Monom(double a, int b) {
 		this.set_coefficient(a);
 		this.set_power(b);
 	}
 
+	/**
+	 * Copy constructor
+	 * @param ot
+	 */
 	public Monom(Monom ot) {
 		this(ot.get_coefficient(), ot.get_power());
 	}
 
+	/**
+	 * Get coefficient
+	 * @return
+	 */
 	public double get_coefficient() {
 		return this._coefficient;
 	}
 
+	/**
+	 * Get power
+	 * @return
+	 */
 	public int get_power() {
 		return this._power;
 	}
@@ -53,6 +75,9 @@ public class Monom implements function {
 		return new Monom(this.get_coefficient() * this.get_power(), this.get_power() - 1);
 	}
 
+	/**
+	 * f Function to calculate the value of the function in specific x
+	 */
 	public double f(double x) {
 		double ans = 0;
 		double p = this.get_power();
@@ -60,11 +85,20 @@ public class Monom implements function {
 		return ans;
 	}
 
+	/**
+	 * Check if monom is Zero
+	 * @return
+	 */
 	public boolean isZero() {
 		return this.get_coefficient() >= 0 && this.get_coefficient() <= EPSILON;
 	}
 
 	// ***************** add your code below **********************
+	
+	/**
+	 * Constructor that gets string and create Monom object
+	 * @param s
+	 */
 	public Monom(String s) {
 		// need to check if comes invalid string (by regex)
 
@@ -75,12 +109,20 @@ public class Monom implements function {
 		splitMonomByString(s);
 	}
 
+	/**
+	 * Add function , to add one monom to another , only if their powers are equal
+	 * @param m
+	 */
 	public void add(Monom m) {
 		if (this._power == m._power) {
 			this.set_coefficient(this._coefficient + m._coefficient);
 		}
 	}
 
+	/**
+	 * Substract function , to substract monoms , only if their powers are equal
+	 * @param m
+	 */
 	public void substract(Monom m) {
 		if (this._power == m._power) {
 			this.set_coefficient(this._coefficient - m._coefficient);
@@ -100,6 +142,10 @@ public class Monom implements function {
 		return false;
 	}
 
+	/**
+	 * Function to multiply monoms
+	 * @param d
+	 */
 	public void multiply(Monom d) {
 		this.set_coefficient(this._coefficient * d._coefficient);
 		this.set_power(this._power + d._power);

@@ -51,10 +51,20 @@ public class JSONDrawingConfig {
 		Range_Y = range_Y;
 	}
 
+	/**
+	 * Validate that the range is not null and his length is bigger than 1
+	 * @param range
+	 * @return
+	 */
 	private static boolean validateRange(double[] range) {
 		return range != null && range.length >= 2;
 	}
 
+	
+	/**
+	 * Function to check that object of the config isn't missing any data
+	 * @return
+	 */
 	public boolean validateObject() {
 		return this.Width != 0 && this.Height != 0 && this.Resolution != 0 && validateRange(this.Range_X)
 				&& validateRange(this.Range_Y);

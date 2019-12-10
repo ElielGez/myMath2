@@ -23,7 +23,7 @@ public class Polynom implements Polynom_able {
 	}
 
 	/**
-	 * Constrctor that get string and split by - or + , and then call Monom add function
+	 * Constructor that get string and split by - or + , and then call Monom add function
 	 * @param s: is a string represents a Polynom
 	 */
 	public Polynom(String s) {
