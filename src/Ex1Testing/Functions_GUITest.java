@@ -81,7 +81,7 @@ class Functions_GUITest {
 		}
 	}
 
-	private static Functions_GUI FunctionsFactory() {
+	public static Functions_GUI FunctionsFactory() {
 		Functions_GUI ans = new Functions_GUI();
 		String s1 = "3.1+2.4x^2-x^4";
 		String s2 = "5+2x-3.3x+0.1x^5";
