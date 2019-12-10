@@ -1,5 +1,7 @@
 # Ariel OOP - Ex1 (ComplexFunction / Polynom / Monom) , Drawing functions
 
+![graph1](https://github.com/ElielGez/myMath2/blob/master/images_examples/Capture.JPG)
+
 ## Introduction:
 This project is part of assignment in Ariel University.
 Main purpose of the project is to create instances of Monom or Polynom or ComplexFunction
