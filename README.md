@@ -18,7 +18,7 @@ but after clone this project , you need to add the external jar of gson from the
 
 * String format of Polynom: (based on Monom class)
 	- Inifinte of monoms format that seperate by '+' or '-'
-	- **No spaces is allowed between monoms..**
+	- Spaces is allowed between monoms.
 
 * String format of ComplexFunction: 
 	- Can start with one of the following operations: ['plus','mul','div','min','max','comp'] , after that need to come open bracket '(' and then two values(Monom,Polynom or ComplexFunction as well) seperate by ',' and after that closing bracket ')'.
