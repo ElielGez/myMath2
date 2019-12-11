@@ -28,6 +28,9 @@ public class Polynom implements Polynom_able {
 	 */
 	public Polynom(String s) {
 		this();
+		if (s == null)
+			throw new ArithmeticException("String cannot be null");
+		s = s.replaceAll(" ","");
 		String[] splittedArr = s.split("(?=[+-])");
 		for (int i = 0; i < splittedArr.length; i++) {
 			Monom m = new Monom(splittedArr[i]);

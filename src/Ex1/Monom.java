@@ -100,6 +100,9 @@ public class Monom implements function {
 	 * @param s
 	 */
 	public Monom(String s) {
+		if (s == null)
+			throw new ArithmeticException("String cannot be null");
+		s = s.replaceAll(" ","");
 		// need to check if comes invalid string (by regex)
 
 		if (!validateFormat(s) || s.isEmpty()) {

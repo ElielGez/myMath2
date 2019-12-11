@@ -22,8 +22,8 @@ public class ComplexFunction implements complex_function {
 	 * f1 and f2
 	 * 
 	 * @param string - operation in string
-	 * @param left - f1
-	 * @param right - f2
+	 * @param left   - f1
+	 * @param right  - f2
 	 */
 	public ComplexFunction(String string, function left, function right) {
 		this.left = left.copy();
@@ -33,8 +33,10 @@ public class ComplexFunction implements complex_function {
 	}
 
 	/**
-	 * ComplexFunction copy constructor
-	 * Even instance of class that implement function interface , can be copied here into new complex function with none operation.
+	 * ComplexFunction copy constructor Even instance of class that implement
+	 * function interface , can be copied here into new complex function with none
+	 * operation.
+	 * 
 	 * @param f
 	 */
 	public ComplexFunction(function f) {
@@ -43,7 +45,7 @@ public class ComplexFunction implements complex_function {
 			this.right = null;
 			this.op = Operation.None;
 		} else {
-			ComplexFunction cf = (ComplexFunction)f;
+			ComplexFunction cf = (ComplexFunction) f;
 			this.op = cf.op;
 			this.left = cf.left.copy();
 			if (cf.right != null)
@@ -86,9 +88,10 @@ public class ComplexFunction implements complex_function {
 	public void setOp(Operation op) {
 		this.op = op;
 	}
-	
+
 	/**
-	 * This equals function isn't fully working for any x, so I created a temp solution as asked from Boaz.
+	 * This equals function isn't fully working for any x, so I created a temp
+	 * solution as asked from Boaz.
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -104,18 +107,20 @@ public class ComplexFunction implements complex_function {
 	}
 
 	/**
-	 * Function toString for ComplexFunction
-	 * if operation is none im returning only the left side , because the right side is null.
+	 * Function toString for ComplexFunction if operation is none im returning only
+	 * the left side , because the right side is null.
 	 */
 	@Override
 	public String toString() {
-		if(this.op != Operation.None)
+		if (this.op != Operation.None)
 			return getStringByOperation(this.op) + "(" + this.left + "," + this.right + ")";
-		else return this.left.toString();
+		else
+			return this.left.toString();
 	}
 
 	/**
-	 * f Function , returning by Operation the value of the function in x value  == f(x)
+	 * f Function , returning by Operation the value of the function in x value ==
+	 * f(x)
 	 */
 	@Override
 	public double f(double x) {
@@ -141,28 +146,37 @@ public class ComplexFunction implements complex_function {
 	}
 
 	/**
-	 * initFromString function , using the initFromStrRecursive function to create ComplexFunction from string
+	 * initFromString function , using the initFromStrRecursive function to create
+	 * ComplexFunction from string
 	 */
 	@Override
 	public function initFromString(String s) {
-		// this if checks that if I got in the string the char ',' it must come with operation. otherwise it's normal polynom
-		if(!checkStringStartsOperation(s) && s.contains(",")) 
-			throw new ArithmeticException("String must start with valid operation (invalid is error or none)");
+		if (s == null)
+			throw new ArithmeticException("String cannot be null");
 		
+		s = s.replaceAll(" ", "");
+
+		// this if checks that if I got in the string the char ',' it must come with
+		// operation. otherwise it's normal polynom
+		if (!checkStringStartsOperation(s) && s.contains(","))
+			throw new ArithmeticException("String must start with valid operation (invalid is error or none)");
+
 		function cf = initFromStrRecursive(new ComplexFunction(), s);
 		if (!(cf instanceof ComplexFunction)) {
 			cf = new ComplexFunction(cf);
 		}
 		return cf;
 	}
-	
+
 	/**
 	 * function to check if string starts with operation.
+	 * 
 	 * @param s
 	 * @return
 	 */
 	private boolean checkStringStartsOperation(String s) {
-		return s.startsWith("plus") || s.startsWith("div") || s.startsWith("mul") || s.startsWith("min") || s.startsWith("max") || s.startsWith("comp");
+		return s.startsWith("plus") || s.startsWith("div") || s.startsWith("mul") || s.startsWith("min")
+				|| s.startsWith("max") || s.startsWith("comp");
 	}
 
 	/**
@@ -174,9 +188,10 @@ public class ComplexFunction implements complex_function {
 	}
 
 	/**
-	 * All of the below functions untill comp function is the same , moving and copy current object to left function.
-	 * And putting f1 in the right side , and set the Operation by function.
-	 * I'm copying the current object because after that I'm override this.right and this.op
+	 * All of the below functions untill comp function is the same , moving and copy
+	 * current object to left function. And putting f1 in the right side , and set
+	 * the Operation by function. I'm copying the current object because after that
+	 * I'm override this.right and this.op
 	 */
 	@Override
 	public void plus(function f1) {
