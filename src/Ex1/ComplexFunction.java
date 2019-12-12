@@ -26,13 +26,15 @@ public class ComplexFunction implements complex_function {
 	 * @param right  - f2
 	 */
 	public ComplexFunction(String string, function left, function right) {
-		if(left == null) throw new ArithmeticException("Left function is required");
-		if(string == null) throw new ArithmeticException("Operation is required");
-		
+		if (left == null)
+			throw new ArithmeticException("Left function is required");
+		if (string == null)
+			throw new ArithmeticException("Operation is required");
+
 		this.left = left.copy();
 		if (right != null) // right can be null (In none operation for example)
 			this.right = right.copy();
-		else if(string != "none")
+		else if (string != "none")
 			throw new ArithmeticException("Right function can be null only if operation is none");
 		this.op = getOperationByString(string);
 	}
@@ -79,6 +81,8 @@ public class ComplexFunction implements complex_function {
 	 * @param left the left to set
 	 */
 	public void setLeft(function left) {
+		if (left == null)
+			throw new ArithmeticException("Left function is required");
 		this.left = left;
 	}
 
@@ -122,6 +126,8 @@ public class ComplexFunction implements complex_function {
 	 */
 	@Override
 	public double f(double x) {
+		if(this.op != Operation.None && this.right == null)
+			throw new ArithmeticException("Right function can be null only if operation is none");
 		switch (this.op) {
 		case Plus:
 			return (this.left.f(x) + this.right.f(x));
@@ -151,7 +157,7 @@ public class ComplexFunction implements complex_function {
 	public function initFromString(String s) {
 		if (s == null)
 			throw new ArithmeticException("String cannot be null");
-		
+
 		s = s.replaceAll(" ", "");
 
 		// this if checks that if I got in the string the char ',' it must come with
@@ -193,43 +199,61 @@ public class ComplexFunction implements complex_function {
 	 */
 	@Override
 	public void plus(function f1) {
+		if (f1 == null)
+			throw new ArithmeticException("Function cannot be null");
+
 		this.left = this.copy();
-		this.right = f1;
+		this.right = f1.copy();
 		this.op = Operation.Plus;
 	}
 
 	@Override
 	public void mul(function f1) {
+		if (f1 == null)
+			throw new ArithmeticException("Function cannot be null");
+
 		this.left = this.copy();
-		this.right = f1;
+		this.right = f1.copy();
 		this.op = Operation.Times;
 	}
 
 	@Override
 	public void div(function f1) {
+		if (f1 == null)
+			throw new ArithmeticException("Function cannot be null");
+
 		this.left = this.copy();
-		this.right = f1;
+		this.right = f1.copy();
 		this.op = Operation.Divid;
 	}
 
 	@Override
 	public void max(function f1) {
+		if (f1 == null)
+			throw new ArithmeticException("Function cannot be null");
+
 		this.left = this.copy();
-		this.right = f1;
+		this.right = f1.copy();
 		this.op = Operation.Max;
 	}
 
 	@Override
 	public void min(function f1) {
+		if (f1 == null)
+			throw new ArithmeticException("Function cannot be null");
+
 		this.left = this.copy();
-		this.right = f1;
+		this.right = f1.copy();
 		this.op = Operation.Min;
 	}
 
 	@Override
 	public void comp(function f1) {
+		if (f1 == null)
+			throw new ArithmeticException("Function cannot be null");
+
 		this.left = this.copy();
-		this.right = f1;
+		this.right = f1.copy();
 		this.op = Operation.Comp;
 	}
 
