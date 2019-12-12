@@ -26,9 +26,14 @@ public class ComplexFunction implements complex_function {
 	 * @param right  - f2
 	 */
 	public ComplexFunction(String string, function left, function right) {
+		if(left == null) throw new ArithmeticException("Left function is required");
+		if(string == null) throw new ArithmeticException("Operation is required");
+		
 		this.left = left.copy();
 		if (right != null) // right can be null (In none operation for example)
 			this.right = right.copy();
+		else if(string != "none")
+			throw new ArithmeticException("Right function can be null only if operation is none");
 		this.op = getOperationByString(string);
 	}
 
@@ -80,13 +85,6 @@ public class ComplexFunction implements complex_function {
 	@Override
 	public Operation getOp() {
 		return this.op;
-	}
-
-	/**
-	 * @param op the op to set
-	 */
-	public void setOp(Operation op) {
-		this.op = op;
 	}
 
 	/**
@@ -260,7 +258,7 @@ public class ComplexFunction implements complex_function {
 		case "none":
 			return Operation.None;
 		case "error":
-			return Operation.Error;
+			throw new ArithmeticException("Operation doesn't exist");
 		default:
 			throw new ArithmeticException("Operation doesn't exist");
 		}
@@ -289,7 +287,7 @@ public class ComplexFunction implements complex_function {
 		case None:
 			return "none";
 		case Error:
-			return "error";
+			throw new ArithmeticException("Operation doesn't exist");
 		default:
 			throw new ArithmeticException("Operation doesn't exist");
 		}
