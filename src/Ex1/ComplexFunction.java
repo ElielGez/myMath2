@@ -16,6 +16,18 @@ public class ComplexFunction implements complex_function {
 	public ComplexFunction() {
 
 	}
+	
+	public ComplexFunction(Operation op, function left, function right) {
+		if (left == null)
+			throw new ArithmeticException("Left function is required");
+
+		this.left = left.copy();
+		if (right != null) // right can be null (In none operation for example)
+			this.right = right.copy();
+		else if (op != Operation.None)
+			throw new ArithmeticException("Right function can be null only if operation is none");
+		this.op = op;
+	}
 
 	/**
 	 * This function is constructor that get Operator as string and two function ,
